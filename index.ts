@@ -53,7 +53,7 @@ app.get("/undo", (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+  console.log(`HomeHub is listening on port ${port}`);
 });
 
 function dispatchEvent(id: string, state: boolean) {
