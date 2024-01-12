@@ -1,4 +1,5 @@
 export interface Device {
+  name: string;
   state: boolean;
 }
 
@@ -7,6 +8,6 @@ export interface Devices {
 }
 
 export interface DeviceEvent {
-    id: string;
-    state: boolean;
+  id: string;
+  state: boolean;
 }

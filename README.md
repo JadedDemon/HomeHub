@@ -3,23 +3,24 @@
 Overview
 ========
 
-This is a simple proof of concept for a REST API to control home appliances. It uses a simple
-web server using express for typescript. Undo functionality is implemented. All data exchanged with the API is in json format. The API is exposed as
+This is a simple proof of concept for a REST API to control home appliances. It uses a simple web server using
+express for typescript. Undo functionality is implemented and will return the last state change that it will undo.
+All data exchanged with the API is in json format. The API is exposed as
 
 Returns a list of devices and their current state
 * GET / 
 
 Changes a device state
-* PATCH / 
-* Payload {id: string, state: boolean}
+* PATCH /:device_id 
+* Payload {state: boolean}
 
 Undo previous state changes
-* GET /undo
+* POST /undo
 
 Currently supported devices are 
-* garage_door
-* dish_washer
-* lights
+* id = 1 name = Dish Washer
+* id = 2 name = Garage Door
+* id = 3 name = Living Room Lights
 
 
 Assumptions
@@ -43,14 +44,14 @@ To test here are some curl examples
 List all devices on the HomeHub
 `curl http://localhost:8080/`
 Expected result:
-`{"dish_washer":{"state":false},"garage_door":{"state":false},"lights":{"state":false}}`
+`[{"id":"1","name":"Dish Washer","state":false},{"id":"2","name":"Garage Door","state":false},{"id":"3","name":"Living Room Lights","state":false}]`
 
 Turn the Garage Door on
-`curl --header "Content-Type: application/json" --request PATCH --data '{"id": "garage_door", "state": true}' http://localhost:8080/`
+`curl --header "Content-Type: application/json" --request PATCH --data '{"state": true}' http://localhost:8080/2`
 Expected result:
-`{"message":"Device garage_door has changed state to ON"}`
+`{"name":"Garage Door","state":true}`
 
 Undo the Garage Door change
-`curl http://localhost:8080/undo`
+`curl --request POST http://localhost:8080/undo`
 Expected Result:
-`{"message":"Device garage_door has changed state to OFF"}`
+`{"name":"Garage Door","state":true}`
