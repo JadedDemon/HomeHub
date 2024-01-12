@@ -10,9 +10,9 @@ All data exchanged with the API is in json format. The API is exposed as
 Returns a list of devices and their current state
 * GET / 
 
-Changes a device state
+Changes a device state and optionally the name of the Device
 * PATCH /:device_id 
-* Payload {state: boolean}
+* Payload {state: boolean, name: string}
 
 Undo previous state changes
 * POST /undo
